@@ -35,11 +35,12 @@
         
         .preview-container { display: none; flex-direction: column; width: 100%; max-width: 1200px; background: transparent; overflow: hidden; margin-top: 5px; gap: 15px; }
         
-        /* Стилі для кожного блоку прогнозу (сьогодні/вчора) */
         .forecast-card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; display: flex; flex-direction: column; width: 100%; }
         .forecast-title { text-align: center; font-size: 14px; font-weight: 700; color: #444; padding: 10px; background: #f9f9f9; border-bottom: 1px solid #eee; text-transform: uppercase; letter-spacing: 0.5px; }
         .image-scroll-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; background: #fdfdfd; border-bottom: 1px solid #eee; }
-        .preview-image { width: max-content; display: block; cursor: pointer; margin: 0 auto }
+        
+        /* Виправлено CSS для картинок IPMA (щоб не розтягувало) */
+        .preview-image { max-width: max-content; display: block; cursor: pointer; margin: 0 auto; }
         
         .action-bar { display: flex; justify-content: flex-end; width: 100%; padding: 10px 15px; box-sizing: border-box; background: var(--card-bg); }
         .delete-btn { background: #ff3b30; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; }
@@ -110,7 +111,7 @@
 
     <script>
         const githubUser = 'Skreebl'; 
-        const repoName = 'ArqMet';
+        const repoName = 'Windbot';
         
         const datePicker = document.getElementById('date-picker');
         const statusMessage = document.getElementById('status');
@@ -182,7 +183,7 @@
 
         async function fetchAllFiles() {
             try {
-                const resW = await fetch(`https://api.github.com/repos/${githubUser}/${repoName}/contents/windguru`);
+                const resW = await fetch(`https://api.github.com/repos/${githubUser}/${repoName}/contents/images`);
                 if (resW.ok) windguruFiles = (await resW.json()).filter(f => f.name.endsWith('.png'));
                 
                 const resI = await fetch(`https://api.github.com/repos/${githubUser}/${repoName}/contents/ipma`);
@@ -208,6 +209,25 @@
             return d.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
         }
 
+        // Функція для отримання точного часу завантаження файлу на GitHub
+        async function fetchFileTime(path) {
+            try {
+                let headers = {};
+                let token = localStorage.getItem('gh_token');
+                if (token) headers['Authorization'] = `Bearer ${token}`;
+                
+                const res = await fetch(`https://api.github.com/repos/${githubUser}/${repoName}/commits?path=${path}&per_page=1`, { headers });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.length > 0) {
+                        const date = new Date(data[0].commit.author.date);
+                        return date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+                    }
+                }
+            } catch (e) { console.error("Erro ao obter a hora", e); }
+            return null;
+        }
+
         function renderScreenshots() {
             previewContainer.style.display = "none";
             currentCard.style.display = "none";
@@ -215,19 +235,16 @@
             
             const files = (currentSource === 'windguru') ? windguruFiles : ipmaFiles;
             
-            // Визначаємо дві дати
             const currentDateStr = datePicker.value;
             const currentObj = new Date(currentDateStr);
             currentObj.setDate(currentObj.getDate() - 1);
             const prevDateStr = currentObj.toISOString().split('T')[0];
 
-            // Фільтруємо файли для обох дат
             const currentDayFiles = files.filter(f => f.name.startsWith(currentDateStr));
             const prevDayFiles = files.filter(f => f.name.startsWith(prevDateStr));
             
             let hasData = false;
 
-            // Блок обраного дня
             if (currentDayFiles.length > 0) {
                 currentDayFiles.sort((a, b) => b.name.localeCompare(a.name));
                 const cFile = currentDayFiles[0];
@@ -235,12 +252,18 @@
                 currentFileSha = cFile.sha;
                 
                 currentImage.src = cFile.path;
-                document.getElementById('current-title').innerText = `Feita em: ${formatDatePT(currentDateStr)} (Atual)`;
+                const titleEl = document.getElementById('current-title');
+                titleEl.innerText = `FEITA EM: ${formatDatePT(currentDateStr)} (ATUAL)`;
+                
+                // Асинхронно запитуємо і додаємо час (às 07:05)
+                fetchFileTime(cFile.path).then(time => {
+                    if (time) titleEl.innerText = `FEITA EM: ${formatDatePT(currentDateStr)} ÀS ${time} (ATUAL)`;
+                });
+
                 currentCard.style.display = "flex";
                 hasData = true;
             }
 
-            // Блок попереднього дня
             if (prevDayFiles.length > 0) {
                 prevDayFiles.sort((a, b) => b.name.localeCompare(a.name));
                 const pFile = prevDayFiles[0];
@@ -248,7 +271,13 @@
                 prevFileSha = pFile.sha;
                 
                 prevImage.src = pFile.path;
-                document.getElementById('prev-title').innerText = `Feita em: ${formatDatePT(prevDateStr)} (Dia Anterior)`;
+                const prevTitleEl = document.getElementById('prev-title');
+                prevTitleEl.innerText = `FEITA EM: ${formatDatePT(prevDateStr)} (DIA ANTERIOR)`;
+                
+                fetchFileTime(pFile.path).then(time => {
+                    if (time) prevTitleEl.innerText = `FEITA EM: ${formatDatePT(prevDateStr)} ÀS ${time} (DIA ANTERIOR)`;
+                });
+
                 prevCard.style.display = "flex";
                 hasData = true;
             }
