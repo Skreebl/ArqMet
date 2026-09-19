@@ -272,10 +272,10 @@
                 
                 prevImage.src = pFile.path;
                 const prevTitleEl = document.getElementById('prev-title');
-                prevTitleEl.innerText = `FEITA EM: ${formatDatePT(prevDateStr)} (DIA ANTERIOR)`;
+                prevTitleEl.innerText = `FEITA EM: (DIA ANTERIOR) ${formatDatePT(prevDateStr)} `;
                 
                 fetchFileTime(pFile.path).then(time => {
-                    if (time) prevTitleEl.innerText = `FEITA EM: ${formatDatePT(prevDateStr)} ÀS ${time} (DIA ANTERIOR)`;
+                    if (time) prevTitleEl.innerText = `FEITA EM: (DIA ANTERIOR) ${formatDatePT(prevDateStr)} ÀS ${time} `;
                 });
 
                 prevCard.style.display = "flex";
