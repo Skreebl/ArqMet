@@ -278,8 +278,8 @@ if (!hasData) {
 
  function loadAIAnalysis() {
     const aiContainer = document.getElementById('ai-analysis-container');
-    const jsonUrl = 'data/analysis.json'; 
-    const fetchUrl = jsonUrl + '?nocache=' + Math.random();
+    const fetchUrl = `https://raw.githubusercontent.com/Skreebl/ArqMet/main/data/analysis.json?nocache=${Math.random()}`;
+
 
 
     aiContainer.style.display = "block";
