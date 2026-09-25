@@ -290,8 +290,8 @@ if (!hasData) {
         })
         .then(text => {
             // Очищаємо текст від можливого сміття (markdown тегів та невидимих символів)
-            let cleanedText = text.replace(/```json/gi, '').replace(/```/gi, '').trim();
-            
+            let cleanedText = text.replace(/```json/gi, '').replace(/```/gi, '').replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
+
             try {
                 // Спробуємо розпарсити очищений текст як JSON
                 const data = JSON.parse(cleanedText);
