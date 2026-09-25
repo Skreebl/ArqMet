@@ -1,1 +1,4 @@
-​{"analysis": "Сьогодні спостерігається підвищення середньої температури та зниження вологості повітря порівняно з учорашнім днем, що призвело до зростання показника VPD. Посилення швидкості вітру додатково стимулює транспірацію рослин, що підвищує споживання вологи з субстрату.", "action": "збільшити дренаж"}
+​{
+"analysis": "Verifica-se hoje um aumento da temperatura máxima e uma redução da humidade relativa nas horas de pico face ao dia anterior, o que resulta num VPD significativamente mais elevado. Esta condição, potenciada pelo aumento da velocidade do vento, intensifica a transpiração das plantas e a necessidade de reposição hídrica.",
+"action": "Aumentar a % de drenagem"
+}
