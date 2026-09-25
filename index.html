@@ -279,7 +279,8 @@ if (!hasData) {
  function loadAIAnalysis() {
     const aiContainer = document.getElementById('ai-analysis-container');
     const jsonUrl = 'data/analysis.json'; 
-    const fetchUrl = jsonUrl + '?t=' + new Date().getTime();
+    const fetchUrl = jsonUrl + '?nocache=' + Math.random();
+
 
     aiContainer.style.display = "block";
     document.getElementById('ai-analysis-text').textContent = "A carregar dados...";
