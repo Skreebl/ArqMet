@@ -277,7 +277,7 @@ if (!hasData) {
  }
   function loadAIAnalysis() {
     const aiContainer = document.getElementById('ai-analysis-container');
-    const fetchUrl = `[https://raw.githubusercontent.com/Skreebl/ArqMet/main/data/analysis.json?nocache=$](https://raw.githubusercontent.com/Skreebl/ArqMet/main/data/analysis.json?nocache=$){Math.random()}`;
+    const fetchUrl = `https://raw.githubusercontent.com/Skreebl/ArqMet/main/data/analysis.json?nocache=${Math.random()}`;
 
     aiContainer.style.display = "block";
     document.getElementById('ai-analysis-text').textContent = "A carregar dados...";
@@ -285,29 +285,28 @@ if (!hasData) {
 
     fetch(fetchUrl)
         .then(response => {
-            if (!response.ok) throw new Error('Ficheiro de análise não disponível.');
-            return response.text(); // Завантажуємо як текст, а не як JSON!
+            if (!response.ok) throw new Error('Ficheiro não disponível.');
+            return response.text();
         })
         .then(text => {
-            // Очищаємо текст від можливого сміття (markdown тегів та невидимих символів)
-            let cleanedText = text.replace(/```json/gi, '').replace(/```/gi, '').replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
-
-            try {
-                // Спробуємо розпарсити очищений текст як JSON
-                const data = JSON.parse(cleanedText);
-                document.getElementById('ai-analysis-text').textContent = data.analysis || "Dados incompletos.";
-                document.getElementById('ai-action-text').textContent = data.action || "Ação não definida.";
-            } catch (e) {
-                console.error('Erro ao converter texto para JSON:', e, text);
-                document.getElementById('ai-analysis-text').textContent = "Erro na formatação dos dados.";
-                document.getElementById('ai-action-text').textContent = "Verifique o ficheiro no GitHub.";
+            // Шукаємо виключно блок JSON від { до }, ігноруючи ВСЕ сміття до і після
+            const jsonMatch = text.match(/\{[\s\S]*\}/);
+            
+            if (!jsonMatch) {
+                throw new Error("Formato JSON não encontrado no ficheiro.");
             }
+            
+            const data = JSON.parse(jsonMatch[0]);
+            document.getElementById('ai-analysis-text').textContent = data.analysis || "Dados incompletos.";
+            document.getElementById('ai-action-text').textContent = data.action || "Ação não definida.";
         })
         .catch(error => {
             console.error('Erro ao carregar análise IA:', error);
-            document.getElementById('ai-analysis-text').textContent = "Análise temporariamente indisponível.";
-            document.getElementById('ai-action-text').textContent = "A aguardar atualização...";
+            document.getElementById('ai-analysis-text').textContent = "Erro na leitura dos dados.";
+            document.getElementById('ai-action-text').textContent = "A aguardar atualização limpa...";
         });
+}
+
 }
  function openModal(imgSrc) {
  fullImg.src = imgSrc;
