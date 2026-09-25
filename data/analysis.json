@@ -1,4 +1,4 @@
 ​{
-"analysis": "Verifica-se hoje um aumento da temperatura máxima e uma redução da humidade relativa nas horas de pico face ao dia anterior, o que resulta num VPD significativamente mais elevado. Esta condição, potenciada pelo aumento da velocidade do vento, intensifica a transpiração das plantas e a necessidade de reposição hídrica.",
-"action": "Aumentar a % de drenagem"
+  "analysis": "Hoje regista-se uma subida da temperatura e uma descida da humidade relativa em comparação com ontem durante o período de pico (13:00-15:00). Estas condições, aliadas a ventos mais fortes, aumentam significativamente o VPD e a transpiração das plantas.",
+  "action": "Aumentar a % de drenagem"
 }
