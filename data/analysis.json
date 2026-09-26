@@ -1,4 +1,4 @@
 ​{
-  "analysis": "Hoje regista-se um aumento da temperatura para 32°C e uma redução da humidade para 26% no período crítico, acompanhados por ventos mais intensos. Estas condições elevam o défice de pressão de vapor (VPD), o que resulta numa taxa de transpiração das plantas significativamente mais elevada.",
-  "action": "Aumentar a % de drenagem"
+  "analysis": "Hoje 26/09/26:\n🌡️ Temp: Mais quente (32°C face a 30°C ontem)\n☁️ Nuvens: Menos nebulosidade (céu limpo)\n💨 Vento: Vento mais forte com rajadas até 26km/h\n💧 Humidade: Mais seco (26% face a 29% ontem)\n📈 VPD: VPD mais elevado devido ao aumento da temperatura e redução da humidade relativa.",
+  "action": "Aumentar a % de drenagem (frequência/volume) para evitar a secagem do substrato e acumulação de sais."
 }
