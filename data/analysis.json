@@ -1,4 +1,4 @@
 ​{
-"analysis": "• Temperatura: Observa-se uma subida térmica hoje (27/09) entre as 13h e as 15h em comparação com o dia anterior.\n• Nebulosidade: Verifica-se uma redução da cobertura de nuvens hoje, o que permite uma maior incidência de radiação solar direta.\n• Velocidade / Rajadas: O vento apresenta-se mais intenso hoje, favorecendo a remoção da camada limite de humidade junto às folhas.\n• Humidade: Os níveis de humidade relativa estão mais baixos hoje do que ontem no mesmo intervalo horário.\n• Impacto no VPD: A combinação de temperaturas mais elevadas, menor humidade e vento mais forte resulta num aumento do Défice de Pressão de Vapor (VPD), o que incrementa a taxa de transpiração das plantas.",
-"action": "Aumentar a % de drenagem"
+  "analysis": "Hoje 27/09/26:\n🌡️ Temp: Aumento da temperatura (26°C face a 23°C ontem).\n☁️ Nuvens: Redução da nebulosidade (15% face a 40%).\n💨 Vento: Aumento da intensidade (22 km/h face a 12 km/h).\n💧 Humidade: Descida da humidade relativa (45% face a 60%).\n📈 VPD: O aumento da temperatura e da velocidade do vento, aliado à redução da humidade e da nebulosidade, resultará num aumento significativo do VPD, o que elevará a taxa de transpiração das plantas.",
+  "action": "Aumentar a % de drenagem"
 }
