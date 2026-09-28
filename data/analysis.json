@@ -1,4 +1,4 @@
 {
-  "analysis": "Análise de Demanda Hídrica (08:00 - 19:00) - 28/09/2026:\n💧 Carga Total de VPD Hoje: 13.5 (Ontem: 15.8)\n📈 Diferença face a ontem: -14.7%\n🔥 Pico Máximo de VPD Hoje: 1.76 kPa\n📋 Resumo: Demanda hídrica semelhante a ontem.",
-  "action": "Manter o limite de tensão (mbar) e a % de drenagem."
+  "analysis": "Análise Diurna (08:00 - 19:00) - Hoje 28/09/2026:\n🌡️ Temp: Temperatura estável (24.0°C face a 24.1°C ontem).\n☁️ Nuvens: Nebulosidade estável (69% face a 78%).\n💨 Vento: Vento estável (8.6 km/h face a 9.3 km/h).\n💧 Humidade: Mais húmido (64% face a 58%).\n📈 VPD: VPD total inferior devido à menor demanda hídrica (-14.7%). Carga: 13.5 (Ontem: 15.8).",
+  "action": "Reduzir a % de drenagem"
 }
