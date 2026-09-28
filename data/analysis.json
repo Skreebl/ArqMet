@@ -1,1 +1,10 @@
-​Будь ласка, завантажте скріншот прогнозу Windguru для Zambujeira do Mar, щоб я міг провести аналіз та сформувати JSON за вашим запитом.
+​{
+  "titulo": "Análise de Rega (IA)",
+  "data": "Hoje 28/10/24",
+  "temperatura": "Aumento de temperatura (20°C face a 19°C ontem).",
+  "nuvens": "Aumento de nebulosidade (55% face a 48%).",
+  "vento": "Redução da velocidade (8 km/h face a 9 km/h).",
+  "humidade": "Aumento da humidade relativa (74% face a 71%).",
+  "vpd": "O VPD estável, dado que as variações conjuntas de temperatura e humidade se compensam mutuamente.",
+  "recomendacao": "Manter a % de drenagem"
+}
