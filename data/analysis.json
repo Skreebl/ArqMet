@@ -1,4 +1,4 @@
 {
-  "analysis": "Resumo Agronómico Diário - 28/09/2026:\n🌡️ Temp Máxima (Tarde): 26.6°C\n🥶 Temp Mínima (Noite): 17.5°C\n💧 Humidade Matinal (6h-9h): 87%\n🦠 Risco Fúngico: Alto (Risco de Botrytis/Míldio devido a orvalho)\n☀️ Risco de Estresse: Baixo",
-  "action": "Abrir a ventilação precocemente para extrair a humidade matinal"
+  "analysis": "Análise de Demanda Hídrica (08:00 - 19:00) - 28/09/2026:\n💧 Carga Total de VPD Hoje: 13.5 (Ontem: 15.8)\n📈 Diferença face a ontem: -14.7%\n🔥 Pico Máximo de VPD Hoje: 1.76 kPa\n📋 Resumo: Demanda hídrica semelhante a ontem.",
+  "action": "Manter o limite de tensão (mbar) e a % de drenagem."
 }
