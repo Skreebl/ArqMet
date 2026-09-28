@@ -50,17 +50,6 @@
  .modal { display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; overflow: auto; }
  .modal-content { max-width: 100%; max-height: 100vh; }
  .close-btn { position: fixed; top: 15px; right: 25px; color: #fff; font-size: 45px; cursor: pointer; z-index: 1002; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); border-radius: 50%; }
-
- /* Стилі для блоку AI */
- .ai-analysis-card { background-color: rgba(0, 150, 255, 0.05); border-left: 4px solid #007bff; border-radius: 8px; padding: 15px 20px; margin: 20px auto; max-width: 800px; width: 100%; box-sizing: border-box; box-shadow: 0 2px 8px rgba(0,0,0,0.1); font-family: inherit; display: none; }
- .ai-analysis-card h3 { margin-top: 0; color: #0056b3; font-size: 18px; margin-bottom: 10px; }
- .ai-analysis-card p {
-    margin: 8px 0;
-    line-height: 1.5;
-    font-size: 15px;
-    white-space: pre-wrap; /* Цей параметр зберігає перенесення рядків */
- }
- .ai-action strong { color: #d9534f; }
  </style>
 </head>
 <body>
@@ -112,13 +101,19 @@
  </div>
  </div>
 
+ <!-- Блок з ШІ-аналізом -->
+ <div id="ai-analysis-container" class="forecast-card" style="display: none; margin-top: 15px;">
+    <div class="forecast-title" style="background: #e3f2fd; border-bottom: 1px solid #bbdefb; color: #1976d2;">
+        🤖 Análise de Rega (Beta)
+    </div>
+    <div id="ai-analysis-content" style="padding: 15px; font-size: 14px; line-height: 1.5; white-space: pre-wrap;">
+        <!-- Тут буде текст з n8n -->
+    </div>
+    <div style="background-color: #fff3cd; color: #856404; border-top: 1px dashed #ffeeba; padding: 10px 15px; font-size: 12px; text-align: center;">
+        ⚠️ <strong>Atenção malta:</strong> Isto é um teste do estagiário de IA 🤖. Ele puxa dados da net, mas às vezes bebe água a mais. Usem como guia, mas confiem mais nos vossos olhos e nos sensores!
+    </div>
  </div>
 
- <!-- Блок AI Аналітики -->
- <div class="ai-analysis-card" id="ai-analysis-container">
-    <h3>🤖 Análise de Rega (IA)</h3>
-    <p class="ai-text"><strong>Condições (VPD):</strong> <span id="ai-analysis-text">A carregar dados...</span></p>
-    <p class="ai-action"><strong>Recomendação:</strong> <span id="ai-action-text">...</span></p>
  </div>
  
 <div id="imageModal" class="modal" onclick="closeModal()">
@@ -186,6 +181,34 @@ quickNavContainer.appendChild(btn);
  });
  }
 
+ async function fetchAIAnalysis() {
+    const aiContainer = document.getElementById('ai-analysis-container');
+    const aiContent = document.getElementById('ai-analysis-content');
+    
+    const selectedDate = datePicker.value;
+    const todayStr = new Date().toISOString().split('T')[0];
+    
+    // Показувати аналіз ТІЛЬКИ якщо обрана дата - сьогодні
+    if (selectedDate === todayStr) {
+        try {
+            // Оновлений шлях: тягнемо сталий файл data/analysis.json
+            const response = await fetch(`data/analysis.json?t=${new Date().getTime()}`); // ?t= запобігає кешуванню браузером
+            if (response.ok) {
+                const data = await response.json();
+                aiContent.innerHTML = `<strong>${data.action}</strong><br><br>${data.analysis}`;
+                aiContainer.style.display = "flex";
+            } else {
+                aiContainer.style.display = "none";
+            }
+        } catch (e) {
+            aiContainer.style.display = "none";
+        }
+    } else {
+        // Ховаємо блок, якщо вибрано не сьогоднішній день
+        aiContainer.style.display = "none";
+    }
+ }
+
  function changeDate(days) {
  let currentDate = new Date(datePicker.value);
  currentDate.setDate(currentDate.getDate() + days);
@@ -194,6 +217,7 @@ quickNavContainer.appendChild(btn);
  }
 
  function processDateChange() {
+ fetchAIAnalysis();
  updateQuickNavActiveState();
  renderScreenshots();
  }
@@ -273,44 +297,12 @@ prevImage.src = pFile.path;
  
 if (!hasData) {
  statusMessage.textContent = "Sem registos para estes dias. 🤷‍♂️";
- document.getElementById('ai-analysis-container').style.display = "none";
  } else {
  statusMessage.textContent = "";
  previewContainer.style.display = "flex";
- loadAIAnalysis();
  }
  }
-  function loadAIAnalysis() {
-    const aiContainer = document.getElementById('ai-analysis-container');
-    const fetchUrl = `https://raw.githubusercontent.com/Skreebl/ArqMet/main/data/analysis.json?nocache=${Math.random()}`;
 
-    aiContainer.style.display = "block";
-    document.getElementById('ai-analysis-text').textContent = "A carregar dados...";
-    document.getElementById('ai-action-text').textContent = "...";
-
-    fetch(fetchUrl)
-        .then(response => {
-            if (!response.ok) throw new Error('Ficheiro não disponível.');
-            return response.text();
-        })
-        .then(text => {
-            // Шукаємо виключно блок JSON від { до }, ігноруючи ВСЕ сміття до і після
-            const jsonMatch = text.match(/\{[\s\S]*\}/);
-            
-            if (!jsonMatch) {
-                throw new Error("Formato JSON não encontrado no ficheiro.");
-            }
-            
-            const data = JSON.parse(jsonMatch[0]);
-            document.getElementById('ai-analysis-text').textContent = data.analysis || "Dados incompletos.";
-            document.getElementById('ai-action-text').textContent = data.action || "Ação não definida.";
-        })
-        .catch(error => {
-            console.error('Erro ao carregar análise IA:', error);
-            document.getElementById('ai-analysis-text').textContent = "Erro na leitura dos dados.";
-            document.getElementById('ai-action-text').textContent = "A aguardar atualização limpa...";
-        });
-}
  function openModal(imgSrc) {
  fullImg.src = imgSrc;
  modal.style.display = "flex";
@@ -398,6 +390,7 @@ if (e.key === 'ArrowLeft') changeDate(-1);
  
 renderQuickNav();
  fetchAllFiles();
+ fetchAIAnalysis(); // Виклик при першому завантаженні
  </script>
 </body>
 </html>
