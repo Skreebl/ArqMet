@@ -1,10 +1,4 @@
 ​{
-  "titulo": "Análise de Rega (IA)",
-  "data": "Hoje 28/10/24",
-  "temperatura": "Aumento de temperatura (20°C face a 19°C ontem).",
-  "nuvens": "Aumento de nebulosidade (55% face a 48%).",
-  "vento": "Redução da velocidade (8 km/h face a 9 km/h).",
-  "humidade": "Aumento da humidade relativa (74% face a 71%).",
-  "vpd": "O VPD estável, dado que as variações conjuntas de temperatura e humidade se compensam mutuamente.",
-  "recomendacao": "Manter a % de drenagem"
+  "analysis": "Hoje 28/09/26:\n🌡️ Temp: Mais quente (32°C face a 31°C ontem).\n☁️ Nuvens: Mais nublado (72-100% face a 32-96%).\n💨 Vento: Vento mais fraco (10-18 km/h face a 15-20 km/h).\n💧 Humidade: Ligeiramente mais seco (25-30% face a 27-30%).\n📈 VPD: VPD superior devido ao aumento da temperatura e menor humidade, aumentando a transpiração.",
+  "action": "Aumentar a % de drenagem"
 }
