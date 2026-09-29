@@ -1,4 +1,4 @@
-{
-  "analysis": "Análise Diurna (08:00 - 19:00) - Hoje 28/09/2026:\n🌡️ Temp: Temperatura estável (24.0°C face a 24.1°C ontem).\n☁️ Nuvens: Nebulosidade estável (69% face a 78%).\n💨 Vento: Vento estável (8.6 km/h face a 9.3 km/h).\n💧 Humidade: Mais húmido (64% face a 58%).\n📈 VPD: VPD total inferior devido à menor demanda hídrica (-14.7%). Carga: 13.5 (Ontem: 15.8).",
-  "action": "Reduzir a % de drenagem"
+​{
+  "analysis": "Hoje 29/09/26:\n🌡️ Temp: Mais quente (32°C face a 31°C ontem).\n☁️ Nuvens: Mais nublado (72-100% face a 32-96%).\n💨 Vento: Vento mais fraco (10-18 km/h face a 15-20 km/h).\n💧 Humidade: Ligeiramente mais seco (25-30% face a 27-30%).\n📈 VPD: VPD superior devido ao aumento da temperatura e menor humidade, aumentando a transpiração.",
+  "action": "Aumentar a % de drenagem"
 }
