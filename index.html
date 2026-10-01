@@ -50,7 +50,19 @@
  .modal { display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; overflow: auto; }
  .modal-content { max-width: 100%; max-height: 100vh; }
  .close-btn { position: fixed; top: 15px; right: 25px; color: #fff; font-size: 45px; cursor: pointer; z-index: 1002; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); border-radius: 50%; }
- </style>
+/* Підвал (Footer) */
+.footer-signature { margin-top: 20px; width: 100%; max-width: 500px; background: var(--card-bg); border-radius: 12px; padding: 15px 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); box-sizing: border-box; text-align: center; margin-bottom: 20px; }
+.footer-content { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.footer-content span { font-size: 14px; color: #666; }
+.footer-actions { display: flex; gap: 10px; width: 100%; }
+.footer-btn { flex: 1; background: var(--hover-bg); border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; color: #555; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; }
+.footer-btn:hover { background: #d0d3d2; }
+.qr-container { background: white; padding: 25px; border-radius: 12px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+.qr-container h3 { margin: 0; color: #333; font-size: 18px; }
+.qr-container p { margin: 0; color: #666; font-size: 14px; }
+.qr-container img { width: 200px; height: 200px; border-radius: 8px; border: 1px solid #eee; }
+
+</style>
 </head>
 <body>
  
@@ -120,6 +132,28 @@
  <span class="close-btn" onclick="closeModal()">&times;</span>
  <img class="modal-content" id="full-image" onclick="event.stopPropagation()">
  </div>
+
+  <!-- Підвал з кнопками -->
+ <div class="footer-signature">
+    <div class="footer-content">
+        <span>Desenvolvido por <strong>Yurii</strong> 👨‍💻</span>
+        <div class="footer-actions">
+            <button onclick="shareApp()" class="footer-btn">📤 Partilhar</button>
+            <button onclick="showQR()" class="footer-btn">📱 QR Code</button>
+        </div>
+    </div>
+ </div>
+
+ <!-- Модальне вікно для QR-коду -->
+ <div id="qrModal" class="modal" onclick="closeQR()">
+    <span class="close-btn" onclick="closeQR()">&times;</span>
+    <div class="qr-container" onclick="event.stopPropagation()">
+        <h3>Aceder no Telemóvel</h3>
+        <img id="qr-image" src="" alt="QR Code">
+        <p>Faça scan para abrir a previsão</p>
+    </div>
+ </div>
+
 
  <script>
  const githubUser = 'Skreebl'; 
@@ -391,6 +425,35 @@ if (e.key === 'ArrowLeft') changeDate(-1);
 renderQuickNav();
  fetchAllFiles();
  fetchAIAnalysis(); // Виклик при першому завантаженні
+
+   function shareApp() {
+    const shareUrl = window.location.href.split('#')[0];
+    if (navigator.share) {
+        navigator.share({
+            title: 'Arquivo de Previsões - Zambujeira do Mar',
+            url: shareUrl
+        }).catch(console.error);
+    } else {
+        navigator.clipboard.writeText(shareUrl);
+        alert('Link copiado para a área de transferência!');
+    }
+ }
+
+ function showQR() {
+    const qrModal = document.getElementById('qrModal');
+    const qrImage = document.getElementById('qr-image');
+    // Беремо чисте посилання без хешів і генеруємо QR через безкоштовне API
+    const currentUrl = encodeURIComponent(window.location.href.split('#')[0]);
+    qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${currentUrl}`;
+    qrModal.style.display = "flex";
+    document.body.style.overflow = "hidden";
+ }
+
+ function closeQR() {
+    document.getElementById('qrModal').style.display = "none";
+    document.body.style.overflow = "auto";
+ }
+
  </script>
 </body>
 </html>
