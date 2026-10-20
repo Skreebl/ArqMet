@@ -1,4 +1,4 @@
 {
-  "analysis": "Análise Diurna (08:00 - 19:00) - Hoje 19/10/2026:\n🌡️ Temp: Mais frio (18.7°C face a 19.9°C ontem).\n☁️ Nuvens: Mais sol (23% face a 85%).\n💨 Vento: Vento estável (8.9 km/h face a 11.3 km/h).\n💧 Humidade: Humidade estável (81% face a 76%).\n📈 VPD: VPD total inferior devido à menor demanda hídrica (-27.3%). Carga: 5.2 (Ontem: 7.1).",
-  "action": "Reduzir a % de drenagem"
+  "analysis": "Análise Diurna (08:00 - 19:00) - Hoje 20/10/2026:\n🌡️ Temp: Temperatura estável (17.9°C face a 18.7°C ontem).\n☁️ Nuvens: Mais nublado (82% face a 12%).\n💨 Vento: Vento mais forte (15.6 km/h face a 9.5 km/h).\n💧 Humidade: Mais seco (65% face a 79%).\n📈 VPD: VPD total superior devido à maior demanda hídrica (+49.2%). Carga: 8.7 (Ontem: 5.8).",
+  "action": "Aumentar a % de drenagem"
 }
