@@ -1,4 +1,4 @@
 {
-  "analysis": "Análise Diurna (10:30 - 16:30) - Hoje 02/11/2026:\n🌡️ Temp: Temperatura estável (21.8°C face a 21.2°C ontem).\n☁️ Nuvens: Nebulosidade estável (0% face a 5%).\n💨 Vento: Vento estável (7.6 km/h face a 8.3 km/h).\n💧 Humidade: Humidade estável (58% face a 62%).\n📈 VPD: VPD total superior devido à maior demanda hídrica (+13.8%). Carga: 7.8 (Ontem: 6.8).",
-  "action": "Aumentar a % de drenagem"
+  "analysis": "Análise Diurna (10:30 - 16:30) - Hoje 03/11/2026:\n🌡️ Temp: Mais frio (19.8°C face a 21.9°C ontem).\n☁️ Nuvens: Mais nublado (24% face a 0%).\n💨 Vento: Vento estável (9.1 km/h face a 7.5 km/h).\n💧 Humidade: Mais húmido (64% face a 58%).\n📈 VPD: VPD total inferior devido à menor demanda hídrica (-25.3%). Carga: 5.8 (Ontem: 7.8).",
+  "action": "Reduzir a % de drenagem"
 }
