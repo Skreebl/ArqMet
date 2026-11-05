@@ -1,4 +1,4 @@
 {
-  "analysis": "Análise Diurna (10:30 - 16:30) - Hoje 04/11/2026:\n🌡️ Temp: Temperatura estável (18.6°C face a 19.5°C ontem).\n☁️ Nuvens: Nebulosidade estável (29% face a 23%).\n💨 Vento: Vento estável (8.4 km/h face a 9.0 km/h).\n💧 Humidade: Mais húmido (73% face a 64%).\n📈 VPD: VPD total inferior devido à menor demanda hídrica (-29.2%). Carga: 4.1 (Ontem: 5.8).",
-  "action": "Reduzir a % de drenagem"
+  "analysis": "Análise Diurna (10:30 - 16:30) - Hoje 05/11/2026:\n🌡️ Temp: Temperatura estável (17.9°C face a 18.4°C ontem).\n☁️ Nuvens: Nebulosidade estável (13% face a 16%).\n💨 Vento: Vento estável (6.8 km/h face a 8.1 km/h).\n💧 Humidade: Mais seco (51% face a 73%).\n📈 VPD: VPD total superior devido à maior demanda hídrica (+73.6%). Carga: 7.1 (Ontem: 4.1).",
+  "action": "Aumentar a % de drenagem"
 }
