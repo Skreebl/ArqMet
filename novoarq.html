@@ -33,18 +33,16 @@
   .quick-nav-btn { background: var(--card-bg); border: 1px solid #ddd; padding: 8px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; color: #555; transition: all 0.2s; flex-shrink: 0; }
   .quick-nav-btn.active { background: var(--accent-color); color: white; border-color: var(--accent-color); }
   
-  /* Контейнер на всю ширину екрану без обмеження в 1200px */
   .preview-container { display: none; flex-direction: column; width: 100%; max-width: 100%; background: transparent; overflow: hidden; margin-top: 5px; gap: 15px; }
   #cards-wrapper { display: flex; flex-direction: column; gap: 15px; width: 100%; }
   
   .forecast-card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; display: flex; flex-direction: column; width: 100%; box-sizing: border-box; }
   .forecast-title { text-align: center; font-size: 14px; font-weight: 700; color: #444; padding: 10px; background: #f9f9f9; border-bottom: 1px solid #eee; text-transform: uppercase; letter-spacing: 0.5px; }
   
-  /* Оригінальний масштаб картинок + плавне перетягування без повзунка */
   .image-scroll-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; background: #fdfdfd; cursor: grab; scrollbar-width: none; }
   .image-scroll-wrapper::-webkit-scrollbar { display: none; }
   .image-scroll-wrapper:active { cursor: grabbing; }
-  .preview-image { width: max-content; max-width: none; height: auto; display: block; margin: 0 auto; user-select: none; -webkit-user-drag: none; }
+  .preview-image { width: max-content; max-width: none; height: auto; display: block; margin: 0 auto; user-select: none; -webkit-user-drag: none; pointer-events: none; }
 
   .widget-scroll-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; background: #ffffff; padding: 10px 0; box-sizing: border-box; cursor: grab; scrollbar-width: none; }
   .widget-scroll-wrapper::-webkit-scrollbar { display: none; }
@@ -52,10 +50,6 @@
   
   .status-message { padding: 1px; text-align: center; color: #888; font-size: 16px; margin-top: 10px; }
 
-  .modal { display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; overflow: auto; }
-  .modal-content { max-width: 100%; max-height: 100vh; }
-  .close-btn { position: fixed; top: 15px; right: 25px; color: #fff; font-size: 45px; cursor: pointer; z-index: 1002; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); border-radius: 50%; }
-  
   /* Підвал (Footer) */
   .footer-signature { margin-top: 20px; width: 100%; max-width: 500px; background: var(--card-bg); border-radius: 12px; padding: 15px 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); box-sizing: border-box; text-align: center; margin-bottom: 20px; }
   .footer-content { display: flex; flex-direction: column; gap: 12px; align-items: center; }
@@ -67,6 +61,8 @@
   .qr-container h3 { margin: 0; color: #333; font-size: 18px; }
   .qr-container p { margin: 0; color: #666; font-size: 14px; }
   .qr-container img { width: 200px; height: 200px; border-radius: 8px; border: 1px solid #eee; }
+  .modal { display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; }
+  .close-btn { position: fixed; top: 15px; right: 25px; color: #fff; font-size: 45px; cursor: pointer; z-index: 1002; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); border-radius: 50%; }
  </style>
 </head>
 <body>
@@ -112,11 +108,6 @@
   </div>
 
  </div>
- 
- <div id="imageModal" class="modal" onclick="closeModal()">
-  <span class="close-btn" onclick="closeModal()">&times;</span>
-  <img class="modal-content" id="full-image" onclick="event.stopPropagation()">
- </div>
 
  <!-- Підвал з кнопками -->
  <div class="footer-signature">
@@ -147,8 +138,6 @@
   const statusMessage = document.getElementById('status');
   const previewContainer = document.getElementById('preview-container');
   const cardsWrapper = document.getElementById('cards-wrapper');
-  const modal = document.getElementById('imageModal');
-  const fullImg = document.getElementById('full-image');
   const quickNavContainer = document.getElementById('quick-nav');
 
   let currentSource = 'windguru';
@@ -283,7 +272,7 @@
    container.appendChild(loaderScript);
   }
 
-  // Синхронізація горизонтального скролу та перетягування мишею
+  // Синхронізація горизонтального скролу та перетягування мишею для віджета та скріншотів
   function initSyncedScroll() {
    const wrappers = document.querySelectorAll('.image-scroll-wrapper, .widget-scroll-wrapper');
    let activeDriver = null;
@@ -304,14 +293,12 @@
      }, 60);
     });
 
-    // Перетягування мишею (Drag-to-scroll) + захист від випадкового кліку при перетягуванні
+    // Перетягування мишею (Drag-to-scroll)
     let isDown = false;
-    let hasDragged = false;
     let startX, startScrollLeft;
 
     wrapper.addEventListener('mousedown', (e) => {
      isDown = true;
-     hasDragged = false;
      startX = e.pageX - wrapper.offsetLeft;
      startScrollLeft = wrapper.scrollLeft;
     });
@@ -322,25 +309,15 @@
 
     wrapper.addEventListener('mouseup', () => {
      isDown = false;
-     setTimeout(() => { hasDragged = false; }, 10);
     });
 
     wrapper.addEventListener('mousemove', (e) => {
      if (!isDown) return;
      e.preventDefault();
      const x = e.pageX - wrapper.offsetLeft;
-     if (Math.abs(x - startX) > 5) hasDragged = true;
      const walk = (x - startX) * 1.5;
      wrapper.scrollLeft = startScrollLeft - walk;
     });
-
-    // Блокуємо відкриття модального вікна, якщо користувач тягнув картинку
-    wrapper.addEventListener('click', (e) => {
-     if (hasDragged) {
-      e.stopPropagation();
-      e.preventDefault();
-     }
-    }, true);
    });
   }
 
@@ -405,7 +382,6 @@
      img.className = 'preview-image';
      img.alt = `Previsão ${dateStr}`;
      img.src = file.path;
-     img.onclick = () => openModal(file.path);
 
      imgWrapper.appendChild(img);
      card.appendChild(title);
@@ -425,41 +401,7 @@
    }
   }
 
-  function openModal(imgSrc) {
-   fullImg.src = imgSrc;
-   modal.style.display = "flex";
-   document.body.style.overflow = "hidden";
-   if (window.location.hash !== '#preview') {
-    history.pushState({modalOpen: true}, '', '#preview');
-   }
-  }
-
-  function closeModal() {
-   modal.style.display = "none";
-   document.body.style.overflow = "auto";
-   
-   const viewport = document.querySelector('meta[name="viewport"]');
-   if (viewport) {
-    viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-    setTimeout(() => {
-     viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes');
-    }, 300);
-   }
-
-   if (window.location.hash === '#preview') {
-    history.back();
-   }
-  }
-
-  window.addEventListener('popstate', function (event) {
-   if (window.location.hash !== '#preview' && modal.style.display === "flex") {
-    modal.style.display = "none";
-    document.body.style.overflow = "auto";
-   }
-  });
-
   document.addEventListener('keydown', (e) => { 
-   if (e.key === 'Escape') closeModal(); 
    if (e.key === 'ArrowLeft') changeDate(-1);
    if (e.key === 'ArrowRight') changeDate(1);
   });
