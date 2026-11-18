@@ -1,4 +1,4 @@
 {
-  "analysis": "Análise Diurna (10:30 - 16:30) - Hoje 17/11/2026:\n🌡️ Temp: Temperatura estável (20.0°C face a 19.4°C ontem).\n☁️ Nuvens: Nebulosidade estável (100% face a 96%).\n💨 Vento: Vento estável (16.0 km/h face a 18.2 km/h).\n💧 Humidade: Mais húmido (97% face a 78%).\n📈 VPD: VPD total inferior devido à menor demanda hídrica (-84.2%). Carga: 0.6 (Ontem: 3.5).",
-  "action": "Reduzir a % de drenagem"
+  "analysis": "Análise Diurna (10:30 - 16:30) - Hoje 18/11/2026:\n🌡️ Temp: Temperatura estável (20.4°C face a 20.0°C ontem).\n☁️ Nuvens: Nebulosidade estável (93% face a 100%).\n💨 Vento: Vento mais forte (24.0 km/h face a 16.2 km/h).\n💧 Humidade: Humidade estável (95% face a 97%).\n📈 VPD: VPD total superior devido à maior demanda hídrica (+117.0%). Carga: 0.9 (Ontem: 0.4).",
+  "action": "Aumentar a % de drenagem"
 }
